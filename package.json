@@ -1,0 +1,14 @@
+{
+    "name": "@arted/node",
+    "version": "0.0.1",
+    "description": "utils for node",
+    "main": "server.js",
+    "repository": "git@github.com:edonet/node.git",
+    "author": "edonet <edonet@163.com>",
+    "license": "MIT",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "^4.16.4",
+        "request": "^2.88.0"
+    }
+}
