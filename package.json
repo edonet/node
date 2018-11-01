@@ -1,6 +1,6 @@
 {
     "name": "@arted/node",
-    "version": "0.0.101",
+    "version": "0.0.102",
     "description": "utils for node",
     "main": "server.js",
     "repository": "git@github.com:edonet/node.git",
