@@ -23,14 +23,14 @@ const cwd = process.cwd();
  * 创建服务器
  *****************************************
  */
-function server({ router } = {}) {
+function server({ router, allowOrign = '*' } = {}) {
     let app = express(),
         listen = app.listen;
 
 
     // 允许跨域
     app.use((req, res, next) => {
-        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Origin', allowOrign);
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.header('Access-Control-Allow-Headers', 'X-Requested-With');
         res.header('Access-Control-Allow-Credentials', 'true');
