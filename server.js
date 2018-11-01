@@ -12,8 +12,10 @@
  *  加载依赖
  *****************************************
  */
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cwd = process.cwd();
 
 
 /**
@@ -25,9 +27,11 @@ function server({ router } = {}) {
     let app = express(),
         listen = app.listen;
 
-    // 加载中间件
-    app.use(express.static('public'));
-    app.use(express.static('static'));
+    // 监听静态文件
+    app.use(express.static(path.resolve(cwd, 'public')));
+    app.use(express.static(path.resolve(cwd, 'static')));
+
+    // 解析【body】
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -35,6 +39,17 @@ function server({ router } = {}) {
     if (router) {
         app.use(router);
     }
+
+    // 定义配置接口
+    app.adopt = install => {
+        if (install) {
+            if (typeof install === 'function' && install.length === 1) {
+                install.call(app, app);
+            } else if (typeof install === 'object' && typeof install.install === 'function') {
+                install.install(app);
+            }
+        }
+    };
 
     // 启动监听
     app.listen = (port, host, callback) => {
@@ -59,7 +74,7 @@ function server({ router } = {}) {
         });
 
         // 启动服务
-        listen(port, host, function() {
+        listen.call(app, port, host, function() {
             let { address, port } = this.address();
 
             // 设置本地地址
